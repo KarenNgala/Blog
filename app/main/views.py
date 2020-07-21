@@ -3,7 +3,7 @@ from flask import render_template, request, redirect, url_for, abort
 from ..models import User, Pitches, Comments
 from flask_login import login_required, current_user
 from flask_user import roles_required
-from .forms import EditProfile, PitchForm, CommentForm
+from .forms import EditProfile, PitchForm, CommentForm, UpdatePost
 from .. import db, photos
 from ..requests import get_quote
 
@@ -22,16 +22,29 @@ def home():
 
 @main.route('/new_pitch', methods=['GET','POST'])
 @login_required
-@roles_required('Writer')
+# @roles_required('Writer')
 def pitch_form():
     pitch_form = PitchForm()
     if pitch_form.validate_on_submit():
-        category=pitch_form.pitch_category.data
         text = pitch_form.pitch_text.data
-        new_pitch = Pitches(category=category, text=text, user=current_user)
+        new_pitch = Pitches(text=text, user=current_user)
         new_pitch.save_pitch()
         return redirect(url_for('main.home'))
     return render_template('new_pitch.html', pitch_form=pitch_form, )
+
+
+@main.route('/edit_post/<int:pitch_id>', methods=['GET','POST'])
+@login_required
+def update_post(pitch_id):
+    pitch = Pitches.query.filter_by(id=pitch_id).first()
+
+    form = UpdatePost()
+    if form.validate_on_submit():
+        pitch.text=form.text.data
+        db.session.add(pitch)
+        db.session.commit()
+        return redirect(url_for('.home', pitch_id=pitch.id))
+    return render_template('edit_post.html', form=form)
 
 
 @main.route('/comments/<int:pitch_id>', methods=['GET','POST'])
