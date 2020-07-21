@@ -5,6 +5,7 @@ from flask_login import login_required, current_user
 from .forms import EditProfile, PitchForm, CommentForm, UpdatePost
 from .. import db, photos
 from ..requests import get_quote
+from sqlalchemy import desc
 
 
 @main.route('/')
@@ -16,7 +17,9 @@ def home():
     posted_by = User.query.filter_by(id=identification).first()
     user = User.query.filter_by(id=current_user.get_id()).first()
 
-    return render_template('pitches.html', quote=quote, pitches=pitches, posted_by=posted_by, user=user)
+    recent_post = Pitches.query.order_by(desc(Pitches.id)).all()
+
+    return render_template('pitches.html', quote=quote, pitches=pitches, posted_by=posted_by, user=user, recent_post=recent_post)
 
 
 @main.route('/new_pitch', methods=['GET','POST'])

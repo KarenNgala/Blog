@@ -12,8 +12,6 @@ def get_quote():
     response = urllib.request.urlopen(url)
     data = json.loads(response.read())
 
-    print(data)
-
     quote_details=[]
 
     author = data.get('author')

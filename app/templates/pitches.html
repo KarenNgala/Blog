@@ -3,20 +3,30 @@
 <!-- content -->
 {% block content %}
 
-<!-- quote -->
-{% for thing in quote%}
-<p class="text-center pr-3 pl-3">{{thing.text}} ~ {{thing.author}} </p>
-{% endfor %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8">
+            <!-- quote -->
+            {% for thing in quote%}
+            <p class="box text-center pr-3 pl-3">{{thing.text}} ~ {{thing.author}} </p>
+            {% endfor %}
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
 
 <div class="container-fluid mt-3 ml-3 ml-3">
     <div class="row">
-        <div class="col-md-2"></div>
+        <div class="col-md-2">
+            <img src="/static/img/clippy2.png" width="200" height="200" alt="">
+        </div>
 
         <!-- RECENT POSTS -->
         <div class="col-md-8">
             <div class="well">
                 <!-- pitches -->
-                {% if pitches %} {% for item in pitches %}
+                <h3 class="text-center font-italic"><u>Latest posts</u></h3>
+                {% if pitches %} {% for item in recent_post %}
                 <div class=" card horizontal p-2">
                     <div class="card-stacked">
                         <div class="card-content">
