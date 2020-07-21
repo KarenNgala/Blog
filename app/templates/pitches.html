@@ -5,40 +5,15 @@
 
 <!-- quote -->
 {% for thing in quote%}
-<p>{{thing.text}} ~ {{thing.author}} </p>
+<p class="text-center pr-3 pl-3">{{thing.text}} ~ {{thing.author}} </p>
 {% endfor %}
 
 <div class="container-fluid mt-3 ml-3 ml-3">
     <div class="row">
-        <!-- CURRENT USER -->
-        {% if current_user.is_authenticated%}
-        <div class="col-md-3 bg-success ml-0 mb-1 text-center">
-            {% if user.avatar %}
-            <img class="img-thumbnail mt-3" src="{{url_for('static',filename=user.avatar)}}" alt="profile-image"> {% else %}
-            <p>No profile picture</p>
-            {% endif %}
-            <div class="text p-2">
-                <h4 class="text-uppercase">{{user.username}}</h4>
-                {% if user.about %}
-                <p>{{user.about}}</p>
-                {% else %}
-                <p>No bio set</p>
-                {% endif %}
-                <span class="font-italic">{{user.email}}</span>
-            </div>
-            <div class="buttons">
-                <button class="btn btn-outline-secondary">
-                    <a href="/new_pitch" class="text-dark">Create a pitch</a>
-                </button>
-                <button class="btn btn-outline-secondary">
-                    <a class="text-dark" href="{{url_for('main.profile',name=user.username)}}">Edit profile</a>
-                </button>
-            </div>
-        </div>
-        {% endif %}
+        <div class="col-md-2"></div>
 
-        <!-- ALL PITCHES -->
-        <div class="offset-1 col-md-7">
+        <!-- RECENT POSTS -->
+        <div class="col-md-8">
             <div class="well">
                 <!-- pitches -->
                 {% if pitches %} {% for item in pitches %}
@@ -84,6 +59,8 @@
                 <br> {% endfor %} {% endif %}
             </div>
         </div>
+
+        <div class="col-md-2"></div>
     </div>
 </div>
 {% endblock %}
