@@ -2,6 +2,12 @@
 
 <!-- content -->
 {% block content %}
+
+<!-- quote -->
+{% for thing in quote%}
+<p>{{thing.text}} ~ {{thing.author}} </p>
+{% endfor %}
+
 <div class="container-fluid mt-3 ml-3 ml-3">
     <div class="row">
         <!-- CURRENT USER -->

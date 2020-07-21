@@ -6,6 +6,8 @@ class Config:
     SECRET_KEY=os.environ.get('SECRET_KEY')
     UPLOADED_PHOTOS_DEST='app/static/photos'
 
+    SQLALCHEMY_DATABASE_URI=os.environ.get('DATABASE_URL')
+
     #email config
     MAIL_SERVER = 'smtp.googlemail.com'
     MAIL_PORT = 587
@@ -16,7 +18,7 @@ class Config:
 class ProductionConfig(Config):
     '''
     '''
-    SQLALCHEMY_DATABASE_URI=os.environ.get('DATABASE_URL')
+    pass
 
 class DevelopmentConfig(Config):
     '''

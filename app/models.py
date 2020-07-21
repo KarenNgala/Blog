@@ -5,6 +5,12 @@ from . import login_manager
 from datetime import datetime
 
 
+class Quote():
+    def __init__(self, author, text):
+        self.author=author
+        self.text=text
+
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
