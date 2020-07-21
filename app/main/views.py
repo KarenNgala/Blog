@@ -6,6 +6,7 @@ from .forms import EditProfile, PitchForm, CommentForm, UpdatePost
 from .. import db, photos
 from ..requests import get_quote
 from sqlalchemy import desc
+from ..email import mail_message
 
 
 @main.route('/')
@@ -30,7 +31,11 @@ def pitch_form():
         text = pitch_form.pitch_text.data
         new_pitch = Pitches(text=text, user=current_user)
         new_pitch.save_pitch()
-        return redirect(url_for('main.home'))
+
+        data = User.query.all()
+        for user in data:
+            mail_message('New post up!', 'email/new_post', user.email, user=user)
+            return redirect(url_for('main.home'))
     return render_template('new_pitch.html', pitch_form=pitch_form, )
 
 
