@@ -35,6 +35,35 @@ body {
     top: 0;
 }
 
-.list-inline {
-    display: inline;
+.box:before {
+    border-color: #bbb rgba(0, 0, 0, 0);
+    border-style: solid;
+    border-width: 8px 8px 0;
+    bottom: -8px;
+    content: "";
+    display: block;
+    left: 20px;
+    position: absolute;
+    width: 0;
+}
+
+.box:after {
+    border-color: #FFFFFF rgba(0, 0, 0, 0);
+    border-style: solid;
+    border-width: 6px 6px 0;
+    bottom: -6px;
+    content: "";
+    display: block;
+    left: 22px;
+    position: absolute;
+    width: 0;
+}
+
+.box {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px dashed #bbb;
+    border-radius: 5px;
+    margin: 0 auto;
+    position: relative;
+    width: auto;
 }

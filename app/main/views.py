@@ -45,6 +45,16 @@ def update_post(pitch_id):
     return render_template('edit_post.html', form=form)
 
 
+@main.route('/delete_post/<int:pitch_id>', methods=['GET','POST'])
+@login_required
+def delete_post(pitch_id):
+    pitch = Pitches.query.filter_by(id=pitch_id).first()
+
+    db.session.delete(pitch)
+    db.session.commit()
+    return redirect(url_for('.home', pitch_id=pitch.id))
+
+
 @main.route('/comments/<int:pitch_id>', methods=['GET','POST'])
 def pitch_comments(pitch_id):
     comments = Comments.get_comments(pitch_id)
@@ -61,6 +71,17 @@ def pitch_comments(pitch_id):
         return redirect(url_for('main.pitch_comments',pitch_id = pitch_id))
 
     return render_template('comments.html', comment_form=form, comments=comments, pitch = pitch, user=user)
+
+
+@main.route('/delete_comment/<int:comment_id>', methods=['GET','POST'])
+@login_required
+def delete_comment(comment_id):
+    comment = Comments.query.filter_by(id=comment_id).first()
+
+    db.session.delete(comment)
+    db.session.commit()
+    return redirect(url_for('.home', comment_id=comment.id))
+
 
 
 @main.route('/user/<name>', methods=['GET','POST'])
