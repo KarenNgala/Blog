@@ -26,7 +26,7 @@ class User(UserMixin, db.Model):
     password_encrypt=db.Column(db.String(128))
     pitches = db.relationship('Pitches', backref='user', lazy='dynamic')
     comments = db.relationship('Comments', backref='comments', lazy='dynamic')
-
+    roles = db.relationship('Role', secondary='user_roles', backref=db.backref('users', lazy='dynamic'))
 
     @property   #write-only
     def password(self):
@@ -41,6 +41,22 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return f'User{self.username}'
+
+
+class Role(db.Model):
+    __tablename__='roles'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), unique=True)
+
+    # writer_role = Role(name='Writer')
+    # db.session.commit()
+
+
+class UserRoles(db.Model):
+    __tablename__='user_roles'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
+    role_id = db.Column(db.Integer(), db.ForeignKey('roles.id', ondelete='CASCADE'))
 
 
 class Pitches(db.Model):

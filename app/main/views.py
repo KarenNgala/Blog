@@ -2,6 +2,7 @@ from . import main
 from flask import render_template, request, redirect, url_for, abort
 from ..models import User, Pitches, Comments
 from flask_login import login_required, current_user
+from flask_user import roles_required
 from .forms import EditProfile, PitchForm, CommentForm
 from .. import db, photos
 from ..requests import get_quote
@@ -21,6 +22,7 @@ def home():
 
 @main.route('/new_pitch', methods=['GET','POST'])
 @login_required
+@roles_required('Writer')
 def pitch_form():
     pitch_form = PitchForm()
     if pitch_form.validate_on_submit():
